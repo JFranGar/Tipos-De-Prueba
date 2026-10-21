@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="es"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PricingService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">iswd752-tipos-prueba</a> &gt; <a href="index.source.html" class="el_package">ec.edu.epn.iswd752.tienda</a> &gt; <span class="el_source">PricingService.java</span></div><h1>PricingService.java</h1><pre class="source lang-java linenums">package ec.edu.epn.iswd752.tienda;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+/**
+ * Objeto de prueba principal del laboratorio.
+ * IMPORTANTE: esta versión contiene un defecto deliberado en el límite de USD 100.
+ */
+<span class="fc" id="L10">public class PricingService {</span>
+
+    public double finalTotal(double subtotal, boolean premium) {
+<span class="fc bfc" id="L13" title="All 2 branches covered.">        if (subtotal &lt; 0) {</span>
+<span class="fc" id="L14">            throw new IllegalArgumentException(&quot;El subtotal no puede ser negativo&quot;);</span>
+        }
+
+        // Corregido: R1 exige subtotal &quot;superior a&quot; USD 100 (estrictamente mayor).
+<span class="fc bfc" id="L18" title="All 4 branches covered.">        if (premium &amp;&amp; subtotal &gt; 100.0) {</span>
+<span class="fc" id="L19">            return money(subtotal * 0.90);</span>
+        }
+
+<span class="fc" id="L22">        return money(subtotal);</span>
+    }
+
+    public double shippingCost(double subtotal, boolean express) {
+<span class="fc bfc" id="L26" title="All 2 branches covered.">        if (subtotal &lt; 0) {</span>
+<span class="fc" id="L27">            throw new IllegalArgumentException(&quot;El subtotal no puede ser negativo&quot;);</span>
+        }
+<span class="fc bfc" id="L29" title="All 2 branches covered.">        if (subtotal &gt;= 200.0) {</span>
+<span class="fc" id="L30">            return 0.0;</span>
+        }
+<span class="fc bfc" id="L32" title="All 2 branches covered.">        return express ? 9.99 : 4.99;</span>
+    }
+
+    private double money(double value) {
+<span class="fc" id="L36">        return BigDecimal.valueOf(value)</span>
+<span class="fc" id="L37">                .setScale(2, RoundingMode.HALF_UP)</span>
+<span class="fc" id="L38">                .doubleValue();</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.15.202606040825</span></div></body></html>
